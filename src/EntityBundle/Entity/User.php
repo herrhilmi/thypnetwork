@@ -14,6 +14,23 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, \Serializable
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="message", mappedBy="from")
+     */
+    private $froms;
+
+    /**
+     * @ORM\OneToMany(targetEntity="comment", mappedBy="user")
+     */
+    private $comments;
+
+    public  function  getComments()
+    {
+        return $this->comments;
+    }
+
+
     /**
      * @var int
      *
@@ -66,10 +83,10 @@ class User implements UserInterface, \Serializable
     private $creationDate;
 
     /**
-     * @ORM\OneToOne(targetEntity="Person")
-     * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Person", cascade={"persist"})
      */
     private $person;
+
 
     /**
      * Get id
@@ -225,20 +242,19 @@ class User implements UserInterface, \Serializable
         return $this->creationDate;
     }
 
-    /**
-     * @return mixed
-     */
+    public function setPerson(Person $person = null)
+    {
+        $this->person = $person;
+    }
+
     public function getPerson()
     {
         return $this->person;
     }
 
-    /**
-     * @param mixed $person
-     */
-    public function setPerson($person)
+    public function getMessages()
     {
-        $this->person = $person;
+        return $this->froms;
     }
 
     public function getSalt()

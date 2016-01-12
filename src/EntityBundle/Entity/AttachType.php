@@ -12,6 +12,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AttachType
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="attachment")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $attachment;
+
+    public function setAttachment(attachment $attachment)
+    {
+        $this->attachment = $attachment;
+
+        return $this;
+    }
+
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+
     /**
      * @var int
      *
