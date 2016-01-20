@@ -12,10 +12,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class annonce
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="comment", mappedBy="annonce")
+     */
+    private $comments;
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+
     /**
      * @ORM\OneToMany(targetEntity="attachment", mappedBy="annonce")
      */
     private $attachments;
+    /**
+     * @ORM\OneToMany(targetEntity="message", mappedBy="annonce")
+     */
+    private $messages;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -150,6 +166,10 @@ class annonce
     public function getAttachments()
     {
         return $this->attachments;
+    }
+    public function getMessages()
+    {
+        return $this->messages;
     }
 
 }

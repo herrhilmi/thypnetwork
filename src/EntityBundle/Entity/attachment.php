@@ -13,14 +13,26 @@ use Doctrine\ORM\Mapping as ORM;
 class attachment
 {
     /**
-     * @ORM\OneToMany(targetEntity="AttachType", mappedBy="attachment")
+     * @ORM\ManyToOne(targetEntity="AttachType")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $AttachTypes;
+    private $AttachType;
 
-    public function getAttachTypes()
+    public function setAttachType(AttachType $AttachType)
     {
-       return $this->AttachTypes;
+        $this->AttachType = $AttachType;
+
+        return $this;
     }
+
+    public function getAttachType()
+    {
+        return $this->AttachType;
+    }
+
+
+
+
 
     /**
      * @ORM\ManyToOne(targetEntity="annonce")
@@ -40,6 +52,24 @@ class attachment
         return $this->annonce;
     }
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="message")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $message;
+
+    public function setMessage(message $message)
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
+    }
 
 
     /**

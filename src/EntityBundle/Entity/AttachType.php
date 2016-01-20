@@ -14,23 +14,14 @@ class AttachType
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="attachment")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="attachment", mappedBy="AttachType")
      */
-    private $attachment;
+    private $attachments;
 
-    public function setAttachment(attachment $attachment)
+    public function getAttachments()
     {
-        $this->attachment = $attachment;
-
-        return $this;
+        return $this->attachments;
     }
-
-    public function getAttachment()
-    {
-        return $this->attachment;
-    }
-
 
     /**
      * @var int

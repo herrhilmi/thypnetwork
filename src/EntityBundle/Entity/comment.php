@@ -13,6 +13,24 @@ use Doctrine\ORM\Mapping as ORM;
 class comment
 {
     /**
+     * @ORM\ManyToOne(targetEntity="annonce")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $annonce;
+
+    public function setAnnonce(annonce $annonce)
+    {
+        $this->annonce = annonce;
+
+        return $this;
+    }
+
+    public function getAnnonce()
+    {
+        return $this->annonce;
+    }
+
+    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
      */

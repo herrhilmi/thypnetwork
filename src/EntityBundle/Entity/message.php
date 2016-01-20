@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class message
 {
+
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
