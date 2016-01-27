@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 col-xs-12 col-sm-12 col-xs-offset-0 col-sm-offset-0" style="margin-top:46px;">
+			<div class="col-md-12 col-xs-12 col-sm-12">
+				<div class="col-md-12 col-xs-12 col-sm-12 bg-primary" >
+					<table>
+						<tr>
+							<td rowspan="2">
+								<img class="img-circle img-thumbnail" hspace=10 vspace=10 src="../perso.png" width="128px" />
+							</td>
+							<td style="padding:10px 0px 0px 15px;">
+								<h4> {% block profileownername  %}{% endblock %}</h4>
+								<a href="#" type="button" class="btn btn-primary btn-md btn-sm btn-xs btn-borderless"><i class="glyphicon glyphicon-plus icon-right-margin" style="color:#FFF;"></i>Ajouter comme ami</a>
+
+							</td>
+						</tr>
+
+					</table>
+				</div>
+				<ul class="nav nav-tabs bg-danger">
+				  <li role="presentation"  {% block profilepostisactive %} {% endblock %}><a href="{{ path('profile') }}">Annonces</a></li>
+				  <li role="presentation"  {% block profilefriendsisactive %} {% endblock %}><a href="{{ path('profile_friends') }}">Amis</a></li>
+				  <li role="presentation"  {% block profileinfosisactive %} {% endblock %}><a href="{{ path('profile_infos') }}">A propos</a></li>
+				</ul>
+			</div>
+			<div class="col-md-12 col-xs-12 col-sm-12">
+				<!-- profile content!-->
+                {% block profilecontent %} {% endblock %}
+				<!-- end profile content!-->
+			</div>
+
+		</div>
+        <!-- last registered area!-->
+
+		<div class="col-md-2 hidden-xs hidden-sm" style="padding:0px;margin:68px 0px;">
+			<h4>Derniers inscrits</h4>
+		</div>
+
+        <!-- end last registered area!-->
+	  </div>
+{% endblock content %}
+
+

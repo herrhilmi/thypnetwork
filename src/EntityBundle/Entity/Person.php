@@ -50,6 +50,15 @@ class Person
     private $birthdate;
 
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_picture", type="string", length=255,nullable=true)
+     */
+    private $profilePicture;
+
+
     /**
      * Get id
      *
@@ -82,6 +91,26 @@ class Person
     public function getFirstname()
     {
         return $this->firstname;
+    }
+
+    /**
+     * Get profilePicture
+     * @return string
+     */
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * Set profilePicture
+     * @param string $profilePicture
+     * @return Person
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
+        return $this;
     }
 
     /**

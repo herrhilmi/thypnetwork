@@ -1,0 +1,15 @@
+{% extends '::base_profile.html.twig' %}
+{% block title %}
+    Mon profil | Thypnetwork - le réseau social du Master 2 thyp de Paris 8
+{% endblock title %}
+{% block profileownername %}
+    {{ user.person.firstname }}&nbsp;{{ user.person.lastname }}
+{% endblock profileownername %}
+{% block profilecontent %}
+    my infos
+{% endblock profilecontent %}
+
+
+
+
+{% block profileinfosisactive %} class="active" {% endblock profileinfosisactive %}

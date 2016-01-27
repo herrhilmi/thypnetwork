@@ -1,0 +1,84 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <div id="my_content" class="row">
+        <div class="col-md-2 hidden-sm hidden-xs" style="margin-top:44px;position:fixed;height:100%">
+            <ul class="nav nav-sidebar bg-danger my-sidebar-shadow" style="overflow-y:hidden;height:100%">
+                <li class="hidden-xs hidden-sm" style="padding:0px;margin:10px 0px;float:none;">
+                    <ul style="list-style:none;width:100%;margin:0 auto; padding:20px 0px 40px 0px;text-align: center;">
+                        <li>
+                            <img class="img-circle img-thumbnail" src="../perso.png" width="128px"/>
+                        </li>
+                        <li style="margin-top:10px"><a href="{{ path('profile') }}"><b> {% block username %}{% endblock %}</b></a></li>
+                        <li class="label"><a href="{{ path('profile_edit') }}" class="text-info">modifier</a></li>
+                    </ul>
+                </li>
+                <li class="hidden-xs hidden-sm text-warning">
+                    <h5 style="padding:0px 10px;">
+                        <small>Annonces</small>
+                    </h5>
+                </li>
+                <li class="active"><a href="{{ path('home') }}"><i class="glyphicon glyphicon-time" style="color:#FF0D42;"></i><span
+                                class="icon-right-margin hidden-xs hidden-sm">Dernières postées</span><span
+                                class="sr-only">(current)</span></a></li>
+                <li><a href="{{ path('most_commented') }}"><i class="glyphicon glyphicon-comment" style="color:#FF0D42;"></i><span
+                                class="icon-right-margin hidden-xs hidden-sm">Plus commentées</span></a></li>
+                <li class="hidden-xs hidden-sm text-warning">
+                    <h5 style="padding:0px 10px;">
+                        <small>Mon compte</small>
+                    </h5>
+                </li>
+                <li><a href="{{ path('profile') }}"><i class="glyphicon glyphicon-user" style="color:#FF0D42;"></i><span
+                                class="icon-right-margin hidden-xs hidden-sm">Profil</span></a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-envelope" style="color:#FF0D42;"></i><span
+                                class="icon-right-margin hidden-xs hidden-sm">Messages </span> <span
+                                class="badge">0</span></a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-bell" style="color:#FF0D42;"></i><span
+                                class="icon-right-margin hidden-xs hidden-sm">Notifications</span><span
+                                class="badge">5</span></a></li>
+
+            </ul>
+        </div>
+        <div class="col-md-8 col-xs-12 col-sm-12 col-md-offset-2 col-xs-offset-0 col-sm-offset-0"
+             style="margin-top:48px;">
+            <!-- share area!-->
+            <div class="row my-box-shadow" style="padding:0px;margin:20px 10px;float:none;">
+                <form action="#" method="post">
+                    <div class="col-md-12" style="padding:0px;margin:0px;">
+                        <textarea name="post" type="textarea" class="form-control" rows="2"
+                                  placeholder="Publier votre annonce ici..."
+                                  style="padding:8px;border-radius:0px;"></textarea>
+                    </div>
+                    <div class="col-md-12 col-xs-12 bg-danger" style="padding:5px 5px 5px 0px;">
+                        <span class="col-md-4 col-xs-6 "><input name="attach" type="file" class="filestyle"
+                                                                data-iconName="glyphicon glyphicon-paperclip"
+                                                                data-size="sm" data-buttonName="btn-default"
+                                                                data-buttonBefore="true" data-buttonText="Attachement"> </span>
+                        <button class="btn btn-primary col-md-offset-6 col-md-2 col-xs-offset-3 col-xs-3 btn-sm"
+                                type="submit"><i class="glyphicon glyphicon-edit icon-right-margin"
+                                                 style="color:#fff;"></i><a href="#"
+                                                                            style="color:#fff;text-decoration:none;"><span
+                                        class="hidden-xs">Publier</span></a></button>
+                    </div>
+                 </form>
+            </div>
+            <!-- end share area!-->
+
+            <!-- posts area!-->
+            {% block posts %}{% endblock %}
+            <!-- end posts area!-->
+
+
+        </div>
+
+        <!-- last registered area!-->
+        {% block lastregistered %}
+
+        {% endblock %}
+        <!-- end last registered area!-->
+
+    </div>
+</div>
+{% endblock content %}
+
+
