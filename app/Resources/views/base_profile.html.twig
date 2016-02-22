@@ -3,15 +3,29 @@
     <div class="row">
         <div class="col-md-10 col-xs-12 col-sm-12 col-xs-offset-0 col-sm-offset-0" style="margin-top:46px;">
 			<div class="col-md-12 col-xs-12 col-sm-12">
-				<div class="col-md-12 col-xs-12 col-sm-12 bg-primary" >
+				<style>
+					#myNav {
+						background: #7D2E42 url("{{ asset('navbar.png') }}") repeat-x;
+
+					}
+
+				</style>
+				<div id="myNav" class="col-md-12 col-xs-12 col-sm-12" >
+
 					<table>
 						<tr>
 							<td rowspan="2">
-								<img class="img-circle img-thumbnail" hspace=10 vspace=10 src="../perso.png" width="128px" />
+								<img class="img-circle img-thumbnail" hspace=10 vspace=10 src="{{ asset('perso-light.png') }}" width="128px" />
 							</td>
 							<td style="padding:10px 0px 0px 15px;">
-								<h4> {% block profileownername  %}{% endblock %}</h4>
-								<a href="#" type="button" class="btn btn-primary btn-md btn-sm btn-xs btn-borderless"><i class="glyphicon glyphicon-plus icon-right-margin" style="color:#FFF;"></i>Ajouter comme ami</a>
+								<h4 style="color:#fff"> {% block profileownername  %}{% endblock %}</h4>
+								{% if profile %}
+									{% if not ami %}
+										<a href="{{ path('add_friend',{'id':profile.id}) }}" type="button" class="btn btn-primary btn-md btn-sm btn-xs btn-borderless"><i class="icon icon-plus icon-right-margin" style="color:#FFF;"></i>Ajouter comme ami</a>
+									{% elseif ami and ami.state == "PENDING" %}
+										Demande envoyée
+									{% endif %}
+								{% endif%}
 
 							</td>
 						</tr>
@@ -19,9 +33,15 @@
 					</table>
 				</div>
 				<ul class="nav nav-tabs bg-danger">
-				  <li role="presentation"  {% block profilepostisactive %} {% endblock %}><a href="{{ path('profile') }}">Annonces</a></li>
-				  <li role="presentation"  {% block profilefriendsisactive %} {% endblock %}><a href="{{ path('profile_friends') }}">Amis</a></li>
-				  <li role="presentation"  {% block profileinfosisactive %} {% endblock %}><a href="{{ path('profile_infos') }}">A propos</a></li>
+					  <li role="presentation"  {% block profilepostisactive %} {% endblock %}>
+						  <a href="{% if profile %}{{ path('profile',{'id':profile.id}) }}{% else %}{{ path('profile') }}{% endif %}">Annonces</a>
+					  </li>
+					  <li role="presentation"  {% block profilefriendsisactive %} {% endblock %}>
+						  <a href="{% if profile %}{{ path('profile_friends',{'id':profile.id}) }}{% else %}{{ path('profile_friends') }}{% endif %}">Amis</a>
+					  </li>
+					  <li role="presentation"  {% block profileinfosisactive %} {% endblock %}>
+						<a href="{% if profile %}{{ path('profile_infos',{'id':profile.id}) }}{% else %}{{ path('profile_infos') }}{% endif %}">A propos</a>
+					  </li>
 				</ul>
 			</div>
 			<div class="col-md-12 col-xs-12 col-sm-12">
@@ -31,12 +51,24 @@
 			</div>
 
 		</div>
-        <!-- last registered area!-->
-
+		<!-- last registered area!-->
 		<div class="col-md-2 hidden-xs hidden-sm" style="padding:0px;margin:68px 0px;">
-			<h4>Derniers inscrits</h4>
+			{% if lastUsers  %}
+				<h5>Derniers inscrits</h5>
+				<table>
+					{% for u in lastUsers %}
+						<tr>
+							<td>
+								<img hspace=10 vspace=10 src="{{ asset('perso-light.png') }}" width="42px" />
+							</td>
+							<td>
+								<h5><a href="{{ path('profile', {'id': u.id}) }}">{{ u.person.firstname }}&nbsp;{{ u.person.lastname }}</a></h5>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			{% endif%}
 		</div>
-
         <!-- end last registered area!-->
 	  </div>
 {% endblock content %}

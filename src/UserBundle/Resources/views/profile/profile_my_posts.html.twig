@@ -3,12 +3,27 @@
    Mon profil | Thypnetwork - le réseau social du Master 2 thyp de Paris 8
 {% endblock title %}
 {% block profileownername %}
-    {{ user.person.firstname }}&nbsp;{{ user.person.lastname }}
+
+    {% if profile %}
+        {{ profile.person.firstname }}&nbsp;{{ profile.person.lastname }}
+    {% else %}
+        {{ user.person.firstname }}&nbsp;{{ user.person.lastname }}
+    {% endif %}
+
 {% endblock profileownername %}
+
 {% block profilecontent %}
-   my post
+    {% if profile  %}
+        {% if ami and ami.state =="ACTIVE"  %}
+            My friend post
+        {% elseif ami and ami.state =="PENDING"   %}
+            Demande d'amitié envoyée.
+        {% else %}
+            Contenu inaccessible.
+        {% endif %}
+    {% else  %}
+        My post
+    {% endif  %}
 {% endblock profilecontent %}
-
-
 
 {% block profilepostisactive %} class="active" {% endblock profilepostisactive %}

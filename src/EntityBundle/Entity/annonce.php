@@ -28,10 +28,7 @@ class annonce
      * @ORM\OneToMany(targetEntity="attachment", mappedBy="annonce")
      */
     private $attachments;
-    /**
-     * @ORM\OneToMany(targetEntity="message", mappedBy="annonce")
-     */
-    private $messages;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -74,9 +71,9 @@ class annonce
     private $date;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="isVisible", type="string", length=1)
+     * @ORM\Column(name="isVisible", type="boolean")
      */
     private $isVisible;
 
@@ -142,7 +139,7 @@ class annonce
     /**
      * Set isVisible
      *
-     * @param string $isVisible
+     * @param boolean $isVisible
      *
      * @return annonce
      */
@@ -156,7 +153,7 @@ class annonce
     /**
      * Get isVisible
      *
-     * @return string
+     * @return boolean
      */
     public function getIsVisible()
     {
@@ -166,10 +163,6 @@ class annonce
     public function getAttachments()
     {
         return $this->attachments;
-    }
-    public function getMessages()
-    {
-        return $this->messages;
     }
 
 }

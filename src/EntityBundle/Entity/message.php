@@ -38,7 +38,7 @@ class message
 
     public function setTo(User $to)
     {
-        $this->from = $to;
+        $this->to = $to;
 
         return $this;
     }

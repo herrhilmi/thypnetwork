@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new AdminBundle\AdminBundle(),
             new UserBundle\UserBundle(),
             new EntityBundle\EntityBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

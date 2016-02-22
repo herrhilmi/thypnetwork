@@ -1,0 +1,14 @@
+{% extends '::base_index.html.twig' %}
+{% block title %}
+    Notifications | Thypnetwork - le réseau social du Master 2 thyp de Paris 8
+{% endblock title %}
+{% block username %}
+    {{ user.username|capitalize }}
+{% endblock username %}
+{% block posts %}
+    <h4>Notifications </h4>
+    {% if notifications  %}
+    {% else  %}
+        Pas de Notifications
+    {% endif  %}
+{% endblock posts %}

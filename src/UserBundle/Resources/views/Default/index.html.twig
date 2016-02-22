@@ -3,15 +3,50 @@
     Thypnetwork - le réseau social du Master 2 thyp de Paris 8
 {% endblock title %}
 {% block username %}
-{{ user.username|capitalize }}
+    {{ user.username|capitalize }}
 {% endblock username %}
 {% block posts %}
-    User, Hello world
+    {% if annonces  %}
+        {% for annonce in annonces %}
+
+<!-- post !-->
+        <div class="row my-box-shadow post">
+            <div class="col-md-12 col-xs-12 col-sm-12" style="padding:0px;margin:0px;">
+                <!-- post head !-->
+                <div class="col-md-12 col-xs-12 col-sm-12 post-head" >
+                    <!-- image !-->
+                    <table>
+                        <tr>
+                            <td>
+                                <img hspace=10 vspace=10 src="{{ asset('perso-light.png') }}" width="54px" />
+                            </td>
+                            <td>
+                                <h4 class="text-primary">{{ annonce.user.person.firstname }}&nbsp;{{ annonce.user.person.lastname }}<br> <small>{{ annonce.date|date("m-d-Y") }}</small></h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- end post head !-->
+                <!-- post content !-->
+                <div class="col-md-12">
+                    <p>{{ annonce.content }}</p>
+                </div>
+                <!-- end post content !-->
+            </div>
+            <div class="col-md-12 col-xs-12  bg-danger"  style="padding:2px 0px 2px 0px;">
+                <div class="col-md-12 col-xs-12" style="padding:0px;margin:0px;">
+                    <span class=" btn col-md-2 col-xs-3" ><i class="icon icon-comment icon-right-margin" style="color:#FF0D42;"></i><a href="#">Commentaire</a></span>
+                </div>
+                <div class="col-md-12 col-xs-12" style="padding:0px 5px" >
+                    <textarea  type="textarea" class="inline-input col-md-12 col-xs-12" rows="1" placeholder="Publier votre annonce ici..." style="padding:5px;border-radius:0px;"></textarea>
+                    <button class="btn btn-primary col-md-2 col-md-offset-10 col-xs-3 col-xs-offset-9  btn-sm" style="margin-top:5px"><a href="#" style="color:#fff;text-decoration:none;"><i class="hidden-md hidden-sm hidden-lg icon icon-comment icon-right-margin" style="color:#fff;"></i><span class="hidden-xs">Commenter</span></a></button>
+                </div>
+            </div>
+        </div>
+        <!-- end post !-->
+        {% endfor %}
+
+    {% endif %}
 {% endblock posts %}
 
 
-{% block lastregistered %}
-    <div class="col-md-2 hidden-xs hidden-sm" style="padding:0px;margin:68px 0px;">
-        <h4>Derniers inscrits</h4>
-    </div>
-{% endblock lastregistered %}

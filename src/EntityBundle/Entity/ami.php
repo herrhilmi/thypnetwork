@@ -20,7 +20,7 @@ class ami
 
     public function setUser(User $user)
     {
-        $this->user = user;
+        $this->user = $user;
 
         return $this;
     }
@@ -57,6 +57,34 @@ class ami
      */
     private $id;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="state", type="text", length=16)
+     */
+    private $state;
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set state
+     * @param string $state
+     *
+     * @return ami
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
 
     /**
      * Get id

@@ -4,11 +4,37 @@
 {% endblock title %}
 
 {% block profileownername %}
-    {{ user.person.firstname }}&nbsp;{{ user.person.lastname }}
+    {% if profile %}
+        {{ profile.person.firstname }}&nbsp;{{ profile.person.lastname }}
+    {% else %}
+        {{ user.person.firstname }}&nbsp;{{ user.person.lastname }}
+    {% endif %}
 {% endblock profileownername %}
 
 {% block profilecontent %}
-    my friends
+    <!-- friends list!-->
+    {% if friends_user  %}
+        <h4 class="text-primary">Amis <small>({{ friends_user|length }})</small></h4>
+
+        {% for f in friends_user %}
+            <div class="col-md-4 col-xs-12 col-sm-6">
+             <table>
+                        <tr>
+                            <td>
+                                <img hspace=10 vspace=10 src="{{ asset('perso-light.png') }}" width="54px" />
+                            </td>
+                            <td>
+                                <h5><a href="{{ path('profile', {'id': f.friend.id}) }}">{{ f.friend.person.firstname }}&nbsp;{{ f.friend.person.lastname }}</a></h5>
+                            </td>
+                        </tr>
+             </table>
+             </div>
+         {% endfor %}
+    {% else  %}
+        <h4 class="text-primary">Amis <small>(0)</small></h4>
+    {% endif  %}
+
+
 {% endblock profilecontent %}
 
 

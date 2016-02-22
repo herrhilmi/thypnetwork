@@ -3,13 +3,74 @@
     Mon profil | Thypnetwork - le réseau social du Master 2 thyp de Paris 8
 {% endblock title %}
 {% block profileownername %}
-    {{ user.person.firstname }}&nbsp;{{ user.person.lastname }}
+    {% if profile %}
+        {{ profile.person.firstname }}&nbsp;{{ profile.person.lastname }}
+    {% else %}
+        {{ user.person.firstname }}&nbsp;{{ user.person.lastname }}
+    {% endif %}
 {% endblock profileownername %}
+
 {% block profilecontent %}
-    my infos
+    {% if profile  %}
+        <div class="col-md-6">
+            <table>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg icon-envelope icon-right-margin"></i>Email</h6></td>
+                    <td class="col-md-6 text-primary"><h5>{{ profile.email }}</h5></td>
+                </tr>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg icon-user icon-right-margin"></i>Nom d'utilisateur</h6> </td>
+                    <td class="col-md-6 text-primary"><h5>{{ profile.username }}</h5></td>
+                </tr>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg icon-time icon-right-margin"></i>Membre depuis </h6></td>
+                    <td class="col-md-6 text-primary"><h5>{{ profile.creationDate|date("m-d-Y") }}</h5></td>
+                </tr>
+            </table>
+        </div>
+        <div  class="col-md-6">
+            <table>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg icon-calendar icon-right-margin"></i>Date de naissance</h6></td>
+                    <td class="col-md-6 text-primary"><h5>{{ profile.person.birthdate|date("m-d-Y") }}</h5></td>
+                </tr>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon  icon-lg {{ user.person.gender == 'H' ? ' icon-male ' : ' icon-female ' }} icon-right-margin"></i>&nbsp;&nbsp;Sexe </h6></td>
+                    <td class="col-md-6 text-primary"><h5>{{ profile.person.gender == 'H' ? 'Homme' : 'Femme' }}</h5></td>
+                </tr>
+            </table>
+        </div>
+    {% else  %}
+
+        <div class="col-md-6">
+            <table>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg icon-envelope icon-right-margin"></i>Email</h6></td>
+                    <td class="col-md-6 text-primary"><h5>{{ user.email }}</h5></td>
+                </tr>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg icon-user icon-right-margin"></i>Nom d'utilisateur</h6> </td>
+                    <td class="col-md-6 text-primary"><h5>{{ user.username }}</h5></td>
+                </tr>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg icon-time icon-right-margin"></i>Membre depuis </h6></td>
+                    <td class="col-md-6 text-primary"><h5>{{ user.creationDate|date("m-d-Y") }}</h5></td>
+                </tr>
+            </table>
+        </div>
+        <div  class="col-md-6">
+            <table>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg icon-calendar icon-right-margin"></i>Date de naissance</h6></td>
+                    <td class="col-md-6 text-primary"><h5>{{ user.person.birthdate|date("m-d-Y") }}</h5></td>
+                </tr>
+                <tr class="row">
+                    <td class="col-md-6 info-row"><h6><i class="icon icon-lg {{ user.person.gender == 'H' ? ' icon-male ' : ' icon-female ' }} icon-right-margin"></i>Sexe </h6></td>
+                    <td class="col-md-6 text-primary"><h5>{{ user.person.gender == 'H' ? 'Homme' : 'Femme' }}</h5></td>
+                </tr>
+            </table>
+        </div>
+    {% endif  %}
 {% endblock profilecontent %}
-
-
-
 
 {% block profileinfosisactive %} class="active" {% endblock profileinfosisactive %}

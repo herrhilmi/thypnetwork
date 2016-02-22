@@ -6,20 +6,31 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../favicon.ico">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Bootstrap core CSS -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <link href="../bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="{{ asset('bootstrap/css/bootstrap-theme.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome-ie7.min.css') }}">
+    <![endif]-->
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
 
     <!-- red color #fce3e3 -->
 
     <style>
+        @font-face {
+            font-family: pier;
+            src: url('{{ asset('typefaces/pier.otf') }}');
+        }
+
         html, body, #my_content {
             height: 100%;
+            font-family: pier !important;
         }
 
         .icon-right-margin {
@@ -63,6 +74,11 @@
             margin-top: -5px;
         }
 
+        .info-row {
+            padding : 15px 0 !important;
+            color : #9B9393;
+        }
+
     </style>
 </head>
 
@@ -88,24 +104,24 @@
                     <input name="query" type="text" class="form-control" placeholder="Recherche..."
                            style="height:25px;margin-top: 6px;border-radius:0px;">
                     <button type="submit" class="btn btn-primary btn-sm " style="height:26px;margin-top: 5px"><i
-                                class="glyphicon glyphicon-search"></i></button>
+                                class="icon icon-search"></i></button>
                 </div>
             </form>
-            <ul class="hidden-lg  nav navbar-nav">
-                <li><a href="{{ path('home') }}"><i class="glyphicon glyphicon-time" style="color:#fff;"></i><span
+            <ul class="hidden-lg hidden-md   nav navbar-nav">
+                <li><a href="{{ path('home') }}"><i class="icon icon-time" style="color:#fff;"></i><span
                                 class="icon-right-margin">Dernières postées</span><span class="sr-only">(current)</span></a>
                 </li>
-                <li><a href="{{ path('most_commented') }}"><i class="glyphicon glyphicon-comment" style="color:#fff;"></i><span
+                <li><a href="{{ path('most_commented') }}"><i class="icon icon-comment" style="color:#fff;"></i><span
                                 class="icon-right-margin">Plus commentées</span></a></li>
-                <li><a href="{{ path('profile') }}"><i class="glyphicon glyphicon-user" style="color:#fff;"></i><span
+                <li><a href="{{ path('profile') }}"><i class="icon icon-user" style="color:#fff;"></i><span
                                 class="icon-right-margin">Profil</span></a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-envelope" style="color:#fff;"></i><span
+                <li><a href="#"><i class="icon icon-envelope" style="color:#fff;"></i><span
                                 class="icon-right-margin">Messages </span></a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-bell" style="color:#fff;"></i><span
+                <li><a href="#"><i class="icon icon-bell" style="color:#fff;"></i><span
                                 class="icon-right-margin">Notifications</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ path('logout') }}"><i class="glyphicon glyphicon-off icon-right-margin"></i><b>Déconnexion</b></a>
+                <li><a href="{{ path('logout') }}"><i class="icon icon-off icon-right-margin"></i><b>Déconnexion</b></a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -118,9 +134,9 @@
     {% endblock %}
 
 </div>
-<script src="../bootstrap/js/jquery1.11.3.min.js"></script>
-<script src="../bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../bootstrap/js/bootstrap-filestyle.min.js"></script>
+<script src="{{ asset('bootstrap/js/jquery1.11.3.min.js') }}" ></script>
+<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap-filestyle.min.js')}}" ></script>
 {% block javascripts %}{% endblock %}
 {% block popup %}{% endblock %}
 </body>

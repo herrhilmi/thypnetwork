@@ -36,7 +36,7 @@ class attachment
 
     /**
      * @ORM\ManyToOne(targetEntity="annonce")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $annonce;
 
@@ -55,7 +55,7 @@ class attachment
 
     /**
      * @ORM\ManyToOne(targetEntity="message")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $message;
 
