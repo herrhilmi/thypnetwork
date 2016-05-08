@@ -1,0 +1,39 @@
+{% extends '::base_index.html.twig' %}
+{% block title %}
+    Notifications | Thypnetwork - le réseau social du Master 2 thyp de Paris 8
+{% endblock title %}
+{% block username %}
+    {{ user.username|capitalize }}
+{% endblock username %}
+{% block posts %}
+
+    {% if found_users  %}
+        <h4>Résultat(s):&nbsp;{{ found_users|length  }}</h4>
+        {% for usr in found_users %}
+            <!-- post !-->
+            <div class="row  post">
+                <div class="col-md-12 col-xs-12 col-sm-12" style="padding:0px;margin:0px;">
+                    <!-- post head !-->
+                    <div class="col-md-12 col-xs-12 col-sm-12 post-head" >
+                        <!-- image !-->
+                        <table>
+                            <tr>
+                                <td>
+                                    <img hspace=10 vspace=10 src="{{ asset('perso-light.png') }}" width="72px" />
+                                </td>
+                                <td>
+                                    <h4 class="text-primary"><a href="{{ path('profile', {'id': usr.id}) }}">{{ usr.person.firstname }}&nbsp;{{ usr.person.lastname }}</a><br> <small>({{ usr.username }})</small></h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- end post head !-->
+                </div>
+            </div>
+        {% endfor %}
+    {% else  %}
+        <h4>Résultat(s): 0 </h4>
+        Pas d'utilisateurs trouvés
+    {% endif  %}
+    {{ error }}
+{% endblock posts %}

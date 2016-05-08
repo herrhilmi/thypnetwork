@@ -3,6 +3,8 @@
 namespace UserBundle\Controller;
 
 use EntityBundle\Entity\ami;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use EntityBundle\Entity\notification;
 use EntityBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,7 +29,7 @@ class ProfileController extends Controller
 
         // etat de l'amètier
         $em = $this->getDoctrine()->getManager();
-        $ami =  $em->getRepository("EntityBundle:ami")->findOneBy(array('user' => $user,'friend' => $profile));
+        $ami =  $em->getRepository("EntityBundle:ami")->findFriendship($user, $profile);
         $em->flush();
 
 
@@ -51,18 +53,19 @@ class ProfileController extends Controller
 
         // etat de l'amètier
         $em = $this->getDoctrine()->getManager();
-        $ami =  $em->getRepository("EntityBundle:ami")->findOneBy(array('user' => $user,'friend' => $profile));
+        $ami =  $em->getRepository("EntityBundle:ami")->findFriendship($user, $profile);
         $em->flush();
 
 
         // liste des amis
         $em = $this->getDoctrine()->getManager();
         if($profile == null){
-            $friends_user = $em->getRepository("EntityBundle:ami")->findBy(array('user' => $user, 'state' => 'ACTIVE'));
+            $friends_user = $em->getRepository("EntityBundle:ami")->findFriendsList($user);
         }else{
-            $friends_user = $em->getRepository("EntityBundle:ami")->findBy(array('user' => $profile, 'state' => 'ACTIVE'));
+            $friends_user = $em->getRepository("EntityBundle:ami")->findFriendsList($profile);
         }
         $em->flush();
+
 
         return  array('user' => $user, 'profile' => $profile, 'lastUsers'  => $last_users, 'friends_user' => $friends_user,'ami'  => $ami);
     }
@@ -82,9 +85,8 @@ class ProfileController extends Controller
 
         // etat de l'amètier
         $em = $this->getDoctrine()->getManager();
-        $ami =  $em->getRepository("EntityBundle:ami")->findOneBy(array('user' => $user,'friend' => $profile));
+        $ami =  $em->getRepository("EntityBundle:ami")->findFriendship($user, $profile);
         $em->flush();
-
 
         return array('user' => $user, 'profile' => $profile, 'lastUsers'  => $last_users,'ami'  => $ami);
     }
@@ -140,6 +142,8 @@ class ProfileController extends Controller
 
         return $last_users;
     }
+
+
 
     /**
      * ajouter comme ami

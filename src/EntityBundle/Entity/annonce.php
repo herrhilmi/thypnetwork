@@ -88,6 +88,21 @@ class annonce
         return $this->id;
     }
 
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     *
+     * @return annonce
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     /**
      * Set content
      *

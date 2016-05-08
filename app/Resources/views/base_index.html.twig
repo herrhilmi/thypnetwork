@@ -21,8 +21,6 @@
                 <li class="active"><a href="{{ path('home') }}"><i class="icon icon-time" style="color:#FF0D42;"></i><h6
                                 class="icon-right-margin hidden-xs hidden-sm"><b>Dernières postées</b></h6><span
                                 class="sr-only">(current)</span></a></li>
-                <li><a href="{{ path('most_commented') }}"><i class="icon icon-comment" style="color:#FF0D42;"></i><h6
-                                class="icon-right-margin hidden-xs hidden-sm"><b>Plus commentées</b></h6></a></li>
                 <li class="hidden-xs hidden-sm text-warning">
                     <h5 style="padding:0px 10px;">
                         <small>Mon compte</small>
@@ -45,6 +43,7 @@
         <div class="col-md-8 col-xs-12 col-sm-12 col-md-offset-2 col-xs-offset-0 col-sm-offset-0"
              style="margin-top:48px;">
             <!-- share area!-->
+            {% if form  %}
             <div class="row my-box-shadow" style="padding:0px;margin:20px 20px;float:none;">
                  {{ form_start(form, {'action': path('home'), 'method': 'POST'}) }}
                     <div class="col-md-12" style="padding:0px;margin:0px;">
@@ -55,6 +54,7 @@
                     </div>
                  {{ form_end(form) }}
             </div>
+            {% endif   %}
             <!-- end share area!-->
 
             <!-- posts area!-->

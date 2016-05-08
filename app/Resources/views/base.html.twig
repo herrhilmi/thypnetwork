@@ -17,6 +17,7 @@
     <!--[if IE 7]>
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome-ie7.min.css') }}">
     <![endif]-->
+
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
 
@@ -79,6 +80,14 @@
             color : #9B9393;
         }
 
+        .recherche-btn {
+
+        }
+        .recherche-input{
+            height:25px;
+            margin-top: -3px;
+            border-radius:0px;
+        }
     </style>
 </head>
 
@@ -98,8 +107,8 @@
             <a class="navbar-brand" style="margin-right:58px;" href="{{ path('home') }}">Social<b>THYP</b></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse">
-            <form class="navbar-form navbar-left" role="search" action="#">
+        <div class="collapse navbar-collapse hidden">
+            <form class="navbar-form navbar-left" role="search" action='{{ path('search') }}' method="post">
                 <div class="horizontal-form">
                     <input name="query" type="text" class="form-control" placeholder="Recherche..."
                            style="height:25px;margin-top: 6px;border-radius:0px;">
@@ -111,8 +120,6 @@
                 <li><a href="{{ path('home') }}"><i class="icon icon-time" style="color:#fff;"></i><span
                                 class="icon-right-margin">Dernières postées</span><span class="sr-only">(current)</span></a>
                 </li>
-                <li><a href="{{ path('most_commented') }}"><i class="icon icon-comment" style="color:#fff;"></i><span
-                                class="icon-right-margin">Plus commentées</span></a></li>
                 <li><a href="{{ path('profile') }}"><i class="icon icon-user" style="color:#fff;"></i><span
                                 class="icon-right-margin">Profil</span></a></li>
                 <li><a href="#"><i class="icon icon-envelope" style="color:#fff;"></i><span
@@ -134,9 +141,10 @@
     {% endblock %}
 
 </div>
-<script src="{{ asset('bootstrap/js/jquery1.11.3.min.js') }}" ></script>
-<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap-filestyle.min.js')}}" ></script>
+<script src="{{ asset('bootstrap/js/jquery-2.2.3.min.js') }}" ></script>
+<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" ></script>
+<script src="{{ asset('bootstrap/js/script.js') }}" ></script>
 {% block javascripts %}{% endblock %}
 {% block popup %}{% endblock %}
 </body>

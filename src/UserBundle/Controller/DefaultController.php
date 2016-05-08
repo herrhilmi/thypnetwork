@@ -3,6 +3,9 @@
 namespace UserBundle\Controller;
 
 use DateTime;
+use EntityBundle\Entity\ami;
+use EntityBundle\Entity\comment;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use EntityBundle\Entity\annonce;
@@ -10,8 +13,13 @@ use EntityBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class DefaultController extends Controller
 {
@@ -47,79 +55,24 @@ class DefaultController extends Controller
             $em->flush();
         }
 
-
         $annonces = $this->getLastAnnonces($user);
+
         return  array('user' => $user, 'lastUsers'  => $last_users, 'notifications'  => $notifications,'form' => $form->createView() , 'error'=>$error, 'annonces'=>$annonces);
     }
 
+
     /**
-     * @Route("/most",name="most_commented")
-     * @Template("UserBundle:Default:index.html.twig")
+    * récuperer les dernières annonces postées
      */
-    public function mostCommentedAction(Request $request)
-    {
-        $user = $this->getConnectedUser();
-
-        // last users registered
-        $last_users = $this->getLastRegisteredUsers(5);
-
-        // last notification received
-        $notifications = $this->getLastUnseenNotifications($user);
-
-        $annonce = new annonce();
-        $error = "";
-        $form = $this->createFormBuilder($annonce)
-            ->add("content",TextareaType::class, array('attr'  => array('placeholder' => 'Saisissez votre texte ici...','rows' => 2, 'maxLength' => 512)))
-            ->add("Publier",SubmitType::class)
-            ->getForm();
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $annonce->setUser($user);
-            $annonce->setIsVisible(true);
-            $now = new DateTime();
-            $annonce->setDate($now);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($annonce);
-            $em->flush();
-        }
-
-        $annonces = $this->getMoastCommentedAnnonces($user);
-        return   array('user' => $user, 'lastUsers'  => $last_users, 'notifications'  => $notifications,'form' => $form->createView() , 'error'=>$error , 'annonces'=>$annonces);
-    }
-
-
     public function getLastAnnonces($user){
-        $em = $this->getDoctrine()->getManager();
-        $amis = $em->getRepository("EntityBundle:ami")->findBy(array('user' => $user, 'state' => 'ACTIVE'));
-        $em->flush();
-        $amis[] = $user;
+
 
         $em = $this->getDoctrine()->getManager();
-        $annonces = $em->getRepository("EntityBundle:annonce")->findBy(array('user' => $amis ),array('date' => 'DESC'), 25, 0);
+        $annonces = $em->getRepository("EntityBundle:annonce")->getLastAnnonces($user);
         $em->flush();
 
         return $annonces;
     }
-
-
-    public function getMoastCommentedAnnonces($user){
-        $em = $this->getDoctrine()->getManager();
-        $amis = $em->getRepository("EntityBundle:ami")->findBy(array('user' => $user, 'state' => 'ACTIVE'));
-        $em->flush();
-        $amis[] = $user;
-
-        $em = $this->getDoctrine()->getManager();
-        $annonces = $em->getRepository("EntityBundle:annonce")->findBy(array('user' => $amis ),array('comments' => 'DESC'), 25, 0);
-        $em->flush();
-
-        return $annonces;
-
-    }
-
-
-
-
 
     /**
      * réucpérer les dernières notifications pas encore vues
@@ -174,4 +127,63 @@ class DefaultController extends Controller
             $em->persist($user);
             $em->flush();
     */
+
+    /**
+     * pour rechercher des utilisateurs
+     * @Route("/search", name="search")
+     * @Template("UserBundle:default:search.html.twig")
+     */
+    public function searchForUsers(Request $request){
+        $user = $this->getConnectedUser();
+        // last users registered
+        $last_users = $this->getLastRegisteredUsers(5);
+
+        // last notification received
+        $notifications = $this->getLastUnseenNotifications($user);
+
+        $found_users = null;
+        $query = $request->request->get('query');
+        $em = $this->getDoctrine()->getManager();
+        $found_users = $em->getRepository("EntityBundle:User")->getUsersLike($query, $user);
+        $em->flush();
+
+        return  array('user' => $user, 'lastUsers'  => $last_users, 'notifications'  => $notifications,'form' => null , 'error'=>null, 'annonces'=>null, 'found_users' => $found_users);
+    }
+
+
+    /**
+     * pour rechercher des utilisateurs
+     * @Route("/commenter", name="commenter")
+     */
+    public function commenter(Request $request){
+        $msg = $request->request->get('msg');
+        $idAnnonce = $request->request->get('annonce');
+        $user = $this->getConnectedUser();
+
+        $commentaire = new comment();
+
+        $commentaire->setIsVisible('YES');
+        $commentaire->setUser($user);
+        $commentaire->setMsg($msg);
+        $now = new DateTime();
+        $commentaire->setDate($now);
+
+        $em = $this->getDoctrine()->getManager();
+        $annonce =  $em->getRepository("EntityBundle:annonce")->findOneById($idAnnonce);
+        $commentaire->setAnnonce($annonce);
+
+        $normalizer = new ObjectNormalizer();
+        $normalizer->setIgnoredAttributes(array('password','comments','messages','username','role','roles','salt'));
+        $serializer = new Serializer(array($normalizer), array(new JsonEncoder()));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($commentaire);
+        $em->flush();
+
+        $jsonContent = $serializer->serialize($commentaire, 'json');
+
+        $response = new Response($jsonContent);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
 }

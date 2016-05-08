@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e0462c60e720039ab0e15020878a5708",
-    "content-hash": "12dfdc54214de40656f1dff65edaeceb",
+    "hash": "4424489a5ca42da6bf20715c0ba29d1e",
+    "content-hash": "594c34e32424f02555eb053c36ffa09e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1783,16 +1783,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.0.0",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "eb2a4f5f7a09fc4ce7a74ae883a8cf8a279614f5"
+                "reference": "10c83b58fbb42be516377de54962a758695ad964"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/eb2a4f5f7a09fc4ce7a74ae883a8cf8a279614f5",
-                "reference": "eb2a4f5f7a09fc4ce7a74ae883a8cf8a279614f5",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/10c83b58fbb42be516377de54962a758695ad964",
+                "reference": "10c83b58fbb42be516377de54962a758695ad964",
                 "shasum": ""
             },
             "require": {
@@ -1862,8 +1862,9 @@
                 "doctrine/orm": "~2.4,>=2.4.5",
                 "egulias/email-validator": "~1.2",
                 "monolog/monolog": "~1.11",
-                "ocramius/proxy-manager": "~0.4|~1.0",
+                "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
                 "phpdocumentor/reflection": "^1.0.7",
+                "symfony/polyfill-apcu": "~1.1",
                 "symfony/security-acl": "~2.8|~3.0"
             },
             "type": "library",
@@ -1908,7 +1909,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-11-30 20:59:43"
+            "time": "2016-05-03 05:58:56"
         },
         {
             "name": "twig/twig",

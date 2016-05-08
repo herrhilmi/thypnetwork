@@ -2,14 +2,18 @@
 {% block title %}
     Thypnetwork - le réseau social du Master 2 thyp de Paris 8
 {% endblock title %}
+{% block javascripts %}
+    <script type="text/javascript">
+        var lien_commentaire = '{{ path('commenter') }}';
+    </script>
+{% endblock javascripts%}
 {% block username %}
     {{ user.username|capitalize }}
 {% endblock username %}
 {% block posts %}
     {% if annonces  %}
         {% for annonce in annonces %}
-
-<!-- post !-->
+        <!-- post !-->
         <div class="row my-box-shadow post">
             <div class="col-md-12 col-xs-12 col-sm-12" style="padding:0px;margin:0px;">
                 <!-- post head !-->
@@ -21,7 +25,7 @@
                                 <img hspace=10 vspace=10 src="{{ asset('perso-light.png') }}" width="54px" />
                             </td>
                             <td>
-                                <h4 class="text-primary">{{ annonce.user.person.firstname }}&nbsp;{{ annonce.user.person.lastname }}<br> <small>{{ annonce.date|date("m-d-Y") }}</small></h4>
+                                <h4 class="text-primary">{{ annonce.user.person.firstname }}&nbsp;{{ annonce.user.person.lastname }}<br> <small>{{ annonce.date|date("d-m-Y") }}</small></h4>
                             </td>
                         </tr>
                     </table>
@@ -35,11 +39,31 @@
             </div>
             <div class="col-md-12 col-xs-12  bg-danger"  style="padding:2px 0px 2px 0px;">
                 <div class="col-md-12 col-xs-12" style="padding:0px;margin:0px;">
-                    <span class=" btn col-md-2 col-xs-3" ><i class="icon icon-comment icon-right-margin" style="color:#FF0D42;"></i><a href="#">Commentaire</a></span>
+                    <span class=" btn col-md-2 col-xs-3" ><i class="icon icon-comment icon-right-margin" style="color:#FF0D42;"></i><a href="#">Commentaire&nbsp;({{ annonce.comments|length }})</a></span>
                 </div>
+
+                <div class="col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1" style="padding:0px 10px;" >
+                        <table>
+                            <tr>
+                                <td  rowspan="2">
+                                    <img hspace=15 vspace=15 src="{{ asset('perso-light.png') }}" width="30px" style="margin:0"/>
+                                </td>
+                                <td>
+                                    <h5 class="text-primary">{{ annonce.user.person.firstname }}&nbsp;{{ annonce.user.person.lastname }}    <small>&nbsp;-&nbsp;{{ annonce.date|date("d.m.Y") }}</small> </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p> ceci est un commentaire de test</p>
+                                </td>
+                            </tr>
+                        </table>
+                </div>
+
                 <div class="col-md-12 col-xs-12" style="padding:0px 5px" >
-                    <textarea  type="textarea" class="inline-input col-md-12 col-xs-12" rows="1" placeholder="Publier votre annonce ici..." style="padding:5px;border-radius:0px;"></textarea>
-                    <button class="btn btn-primary col-md-2 col-md-offset-10 col-xs-3 col-xs-offset-9  btn-sm" style="margin-top:5px"><a href="#" style="color:#fff;text-decoration:none;"><i class="hidden-md hidden-sm hidden-lg icon icon-comment icon-right-margin" style="color:#fff;"></i><span class="hidden-xs">Commenter</span></a></button>
+                    <input class="hidden" type="text" name="annonce.id" value="{{ annonce.id }}"/>
+                    <textarea  type="textarea" name="msg" class="inline-input col-md-12 col-xs-12" rows="1" placeholder="Votre commentaire ici..." style="padding:5px;border-radius:0px;"></textarea>
+                    <button  class="commenter btn btn-primary col-md-2 col-md-offset-10 col-xs-3 col-xs-offset-9  btn-sm" style="margin-top:5px"><i class="hidden-md hidden-sm hidden-lg icon icon-comment icon-right-margin" style="color:#fff;"></i><span class="hidden-xs">Commenter</span></button>
                 </div>
             </div>
         </div>
@@ -48,5 +72,6 @@
 
     {% endif %}
 {% endblock posts %}
+
 
 

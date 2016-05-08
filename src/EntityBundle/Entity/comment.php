@@ -20,7 +20,7 @@ class comment
 
     public function setAnnonce(annonce $annonce)
     {
-        $this->annonce = annonce;
+        $this->annonce = $annonce;
 
         return $this;
     }

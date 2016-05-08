@@ -8,6 +8,8 @@ use EntityBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class NotificationsController extends Controller
@@ -32,6 +34,7 @@ class NotificationsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $notifications = $em->getRepository("EntityBundle:notification")->findBy(array('to' => $user, 'seen' => 'NO'),null,null,0);
         $em->flush();
-        return  array('user' => $user, 'lastUsers'  => $last_users, 'notifications'  => $notifications);
+
+        return  array('user' => $user, 'lastUsers'  => $last_users,'form'  => null, 'notifications'  => $notifications);
     }
 }

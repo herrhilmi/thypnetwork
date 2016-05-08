@@ -10,4 +10,35 @@ namespace EntityBundle\Repository;
  */
 class amiRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    function findFriendship($user1, $user2){
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT DISTINCT am
+            FROM EntityBundle:ami am
+            WHERE (am.user = :user1  AND am.friend = :user2) OR (am.user = :user2  AND am.friend = :user1)')
+            ->setParameter('user1', $user1)
+            ->setParameter('user2', $user2);
+
+        try {
+            return $query->getOneOrNullResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+
+    function findFriendsList($user){
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT DISTINCT am
+            FROM EntityBundle:ami am
+            WHERE (am.user = :user  OR am.friend = :user) AND am.state = :state')
+            ->setParameter('user', $user)
+            ->setParameter('state', 'ACTIVE');
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

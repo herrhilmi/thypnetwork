@@ -10,4 +10,23 @@ namespace EntityBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+    * rechercher des utilisateurs avec le query de la requte
+     */
+    function getUsersLike($query, $user){
+        $key = "%".$query."%";
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT DISTINCT u
+            FROM EntityBundle:User u, EntityBundle:Person p
+            WHERE u != :user AND u.person = p AND (p.firstname LIKE :query  OR p.lastname LIKE :query)')
+            ->setParameter('query', $key)
+            ->setParameter('user', $user);
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

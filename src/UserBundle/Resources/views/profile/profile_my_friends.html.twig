@@ -24,7 +24,19 @@
                                 <img hspace=10 vspace=10 src="{{ asset('perso-light.png') }}" width="54px" />
                             </td>
                             <td>
-                                <h5><a href="{{ path('profile', {'id': f.friend.id}) }}">{{ f.friend.person.firstname }}&nbsp;{{ f.friend.person.lastname }}</a></h5>
+                                {% if profile %}
+                                    {% if f.friend.id == profile.id %}
+                                        <h5><a href="{{ path('profile', {'id': f.user.id}) }}">{{ f.user.person.firstname }}&nbsp;{{ f.user.person.lastname }}</a></h5>
+                                    {% else %}
+                                        <h5><a href="{{ path('profile', {'id': f.friend.id}) }}">{{ f.friend.person.firstname }}&nbsp;{{ f.friend.person.lastname }}</a></h5>
+                                    {% endif %}
+                                {% else %}
+                                    {% if f.friend.id == user.id %}
+                                        <h5><a href="{{ path('profile', {'id': f.user.id}) }}">{{ f.user.person.firstname }}&nbsp;{{ f.user.person.lastname }}</a></h5>
+                                    {% else %}
+                                        <h5><a href="{{ path('profile', {'id': f.friend.id}) }}">{{ f.friend.person.firstname }}&nbsp;{{ f.friend.person.lastname }}</a></h5>
+                                    {% endif %}
+                                {% endif%}
                             </td>
                         </tr>
              </table>

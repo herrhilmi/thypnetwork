@@ -23,7 +23,7 @@
 									{% if not ami %}
 										<a href="{{ path('add_friend',{'id':profile.id}) }}" type="button" class="btn btn-primary btn-md btn-sm btn-xs btn-borderless"><i class="icon icon-plus icon-right-margin" style="color:#FFF;"></i>Ajouter comme ami</a>
 									{% elseif ami and ami.state == "PENDING" %}
-										Demande envoyée
+										<h5 style="color:#fff"> Demande envoyée</h5>
 									{% endif %}
 								{% endif%}
 
